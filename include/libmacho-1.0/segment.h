@@ -45,7 +45,7 @@ typedef struct macho_segment_t_64 {
 	uint64_t address;
 	unsigned char* data;
 	uint64_t section_count;
-	macho_section_t** sections;
+	macho_section_t_64** sections;
 	macho_segment_cmd_t_64* command;
 } macho_segment_t_64;
 
@@ -54,7 +54,7 @@ typedef struct macho_segment_t_64 {
  */
 macho_segment_t_64* macho_segment_create_64();
 macho_segment_t_64* macho_segment_load_64(unsigned char* data, uint64_t offset);
-macho_section_t* macho_segment_get_section_64(macho_segment_t_64* segment, const char* section);
+macho_section_t_64* macho_segment_get_section_64(macho_segment_t_64* segment, const char* section);
 void macho_segment_debug_64(macho_segment_t_64* segment);
 void macho_segment_free_64(macho_segment_t_64* segment);
 
