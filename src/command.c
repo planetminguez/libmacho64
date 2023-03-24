@@ -73,7 +73,7 @@ macho_command_t_64* macho_command_load_64(unsigned char* data, uint64_t offset) 
 		return NULL;
 	}
 
-	macho_command_info_t_64* info = macho_command_info_load_64(data, offset); //(macho_command_info_t_64*) &data[offset];
+	macho_command_info_t_64* info = macho_command_info_load_64(data, offset); 
 	if (info) {
 		command->info = info;
 		command->cmd = info->cmd;

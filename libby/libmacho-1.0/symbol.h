@@ -20,28 +20,28 @@
 #ifndef MACHO_SYMBOL_H_
 #define MACHO_SYMBOL_H_
 
-typedef struct macho_header_t {
+typedef struct macho_header_t_64 {
 	uint64_t magic;
-} macho_symbol_info_t;
+} macho_symbol_info_t_64;
 
-typedef struct macho_symbol_t {
-	macho_symbol_info_t* info;
-} macho_symbol_t;
+typedef struct macho_symbol_t_64 {
+	macho_symbol_info_t_64* info;
+} macho_symbol_t_64;
 
 /*
  * Mach-O Segment Functions
  */
-macho_symbol_t* macho_symbol_create();
-macho_symbol_t* macho_symbol_load(unsigned char* data, uint64_t offset);
-void macho_symbol_debug(macho_symbol_t* command);
-void macho_symbol_free(macho_symbol_t* command);
+macho_symbol_t_64* macho_symbol_create_64();
+macho_symbol_t_64* macho_symbol_load_64(unsigned char* data, uint64_t offset);
+void macho_symbol_debug_64(macho_symbol_t_64* command);
+void macho_symbol_free_64(macho_symbol_t_64* command);
 
 /*
  * Mach-O Segment Info Functions
  */
-macho_symbol_info_t* macho_symbol_info_create();
-macho_symbol_info_t* macho_symbol_info_load(unsigned char* data, uint64_t offset);
-void macho_symbol_info_debug(macho_symbol_info_t* info);
-void macho_symbol_info_free(macho_symbol_info_t* info);
+macho_symbol_info_t_64* macho_symbol_info_create_64();
+macho_symbol_info_t_64* macho_symbol_info_load_64(unsigned char* data, uint64_t offset);
+void macho_symbol_info_debug_64(macho_symbol_info_t_64* info);
+void macho_symbol_info_free_64(macho_symbol_info_t_64* info);
 
 #endif /* MACHO_SYMBOL_H_ */

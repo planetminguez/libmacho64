@@ -67,7 +67,7 @@ void macho_free_64(macho_t_64* macho);
 
 uint64_t macho_lookup_64(macho_t_64* macho, const char* sym);
 macho_segment_t_64* macho_get_segment_64(macho_t_64* macho, const char* segment);
-macho_section_t_64_64* macho_get_section_64(macho_t_64* macho, const char* segment, const char* section);
+macho_section_t_64* macho_get_section_64(macho_t_64* macho, const char* segment, const char* section);
 void macho_list_symbols_64(macho_t_64* macho, void (*print_func)(const char*, uint64_t, void*), void* userdata);
 
 

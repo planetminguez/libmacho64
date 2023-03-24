@@ -41,7 +41,7 @@ static void print_usage(int argc, char **argv)
 	printf("\n");
 }
 
-static uint64_t get_virtual_address(macho_t* macho, uint64_t offset)
+static uint64_t get_virtual_address(macho_t_64* macho, uint64_t offset)
 {
 	if (macho->segment_count == 0) {
 		error("no segments?\n");
@@ -52,7 +52,7 @@ static uint64_t get_virtual_address(macho_t* macho, uint64_t offset)
 	int i;
 
 	for (i = 0; i < macho->segment_count; i++) {
-		macho_segment_t* seg = macho->segments[i];
+		macho_segment_t_64* seg = macho->segments[i];
 		if ((offset >= seg->offset) && (offset < seg->offset + seg->size)) {
 			vaddr = (offset + seg->address) - seg->offset;
 			break;
@@ -77,7 +77,7 @@ int main(int argc, char* argv[])
 				print_usage(argc, argv);
 				return 0;
 			}
-			sscanf(argv[i], "%i", &offset);
+			sscanf(argv[i], "%lli", &offset);
 			mode = OP_VIRT;
 			continue;
 		}
@@ -99,7 +99,7 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 
-	macho_t* macho = macho_open(argv[1]);
+	macho_t_64* macho = macho_open_64(argv[1]);
 	if(macho == NULL) {
 		error("Unable to open macho file\n");
 	}
@@ -109,7 +109,7 @@ int main(int argc, char* argv[])
 		{
 			uint64_t vaddr = get_virtual_address(macho, offset);
 			if (vaddr > 0) {
-				printf("0x%08x\n", vaddr);
+				printf("0x%08llx\n", vaddr);
 			} else {
 				printf("Not found...\n");
 			}
@@ -137,7 +137,7 @@ int main(int argc, char* argv[])
 			debug("Found match in string '%s', offset 0x%08x\n", macho->data + offset, offset);
 			saddr = get_virtual_address(macho, offset);
 			if (saddr == 0) {
-				error("Error: could not get virtual address for offset 0x%08x\n", offset);
+				error("Error: could not get virtual address for offset 0x%08llx\n", offset);
 				continue;
 			}
 			debug("Virtual address: 0x%08x\n", saddr);
@@ -151,7 +151,7 @@ int main(int argc, char* argv[])
 						offset -= 2;
 					}
 					debug("found push instruction at offset 0x%08x\n", offset);
-					printf("function 0x%08x\n", get_virtual_address(macho, offset));
+					printf("function 0x%08llx\n", get_virtual_address(macho, offset));
 				}
 			}
 		}
@@ -161,7 +161,7 @@ int main(int argc, char* argv[])
 		}
 		break;
 	case OP_INFO:
-		macho_debug(macho);
+		macho_debug_64(macho);
 		break;
 	default:
 		printf("invalid mode?!\n");
@@ -169,6 +169,6 @@ int main(int argc, char* argv[])
 	}
 
 leave:
-	macho_free(macho);
+	macho_free_64(macho);
 	return 0;
 }

@@ -28,16 +28,16 @@ int main(int argc, char* argv[]) {
 		return 0;
 	}
 	char* exec = argv[1];
-	macho_t* macho = macho_open(exec);
+	macho_t_64* macho = macho_open_64(exec);
 	if(macho) {
-		macho_debug(macho);
+		macho_debug_64(macho);
 		printf("Getting __DWARF segment\n");
-		macho_section_t* dwarf_abbrev = macho_get_section(macho, "__DWARF", "__debug_abbrev");
+		macho_section_t_64* dwarf_abbrev = macho_get_section_64(macho, "__DWARF", "__debug_abbrev");
 		if(dwarf_abbrev) {
 			printf("Found DWARF debug_abbrev section at 0x%08x and is 0x%08x bytes long\n", dwarf_abbrev->info->offset, dwarf_abbrev->info->size);
-			macho_section_free(dwarf_abbrev);
+			macho_section_free_64(dwarf_abbrev);
 		}
-		macho_free(macho);
+		macho_free_64(macho);
 	}
 	return 0;
 }
