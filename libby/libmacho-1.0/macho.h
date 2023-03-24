@@ -30,86 +30,86 @@
 
 #define MACHO_MAGIC_32  0xFEEDFACE
 #define MACHO_MAGIC_64  0xFEEDFACF
-#define MACHO_MAGIC_FAT 0xCAFEBABE
+#define MACHO_MAGIC_FAT 0xCAFEBABE// 
 
-typedef struct macho_header_t {
-	uint32_t magic;
-	uint32_t cputype;
-	uint32_t cpusubtype;
-	uint32_t filetype;
-	uint32_t ncmds;
-	uint32_t sizeofcmds;
-	uint32_t flags;
-} macho_header_t;
+typedef struct macho_header_t_64 {
+	uint64_t magic;
+	uint64_t cputype;
+	uint64_t cpusubtype;
+	uint64_t filetype;
+	uint64_t ncmds;
+	uint64_t sizeofcmds;
+	uint64_t flags;
+} macho_header_t_64;
 
-typedef struct macho_t {
-	uint8_t* data;
-	uint32_t size;
-	uint32_t offset;
-	uint32_t command_count;
-	uint32_t segment_count;
-	uint32_t symtab_count;
-	macho_header_t* header;
-	macho_symtab_t** symtabs;
-	macho_command_t** commands;
-	macho_segment_t** segments;
-} macho_t;
+typedef struct macho_t_64 { 
+	uint16_t* data;
+	uint64_t size;
+	uint64_t offset;
+	uint64_t command_count;
+	uint64_t segment_count;
+	uint64_t symtab_count;
+	macho_header_t_64* header;
+	macho_symtab_t_64_64** symtabs;
+	macho_command_t_64** commands;
+	macho_segment_t_64** segments;
+} macho_t_64;
 
 /*
  * Mach-O Functions
  */
-macho_t* macho_create();
-macho_t* macho_open(const char* path);
-macho_t* macho_load(unsigned char* data, uint32_t size);
-void macho_debug(macho_t* macho);
-void macho_free(macho_t* macho);
+macho_t_64* macho_create_64();
+macho_t_64* macho_open_64(const char* path);
+macho_t_64* macho_load_64(unsigned char* data, uint64_t size);
+void macho_debug_64(macho_t_64* macho);
+void macho_free_64(macho_t_64* macho);
 
-uint32_t macho_lookup(macho_t* macho, const char* sym);
-macho_segment_t* macho_get_segment(macho_t* macho, const char* segment);
-macho_section_t* macho_get_section(macho_t* macho, const char* segment, const char* section);
-void macho_list_symbols(macho_t* macho, void (*print_func)(const char*, uint32_t, void*), void* userdata);
+uint64_t macho_lookup_64(macho_t_64* macho, const char* sym);
+macho_segment_t_64* macho_get_segment_64(macho_t_64* macho, const char* segment);
+macho_section_t* macho_get_section_64(macho_t_64* macho, const char* segment, const char* section);
+void macho_list_symbols_64(macho_t_64* macho, void (*print_func)(const char*, uint64_t, void*), void* userdata);
 
 
-int macho_handle_command(macho_t* macho, macho_command_t* command);
+int macho_handle_command_64(macho_t_64* macho, macho_command_t_64* command);
 
 /*
  * Mach-O Header Functions
  */
-macho_header_t* macho_header_create();
-macho_header_t* macho_header_load(macho_t* macho);
-void macho_header_debug(macho_t* macho);
-void macho_header_free(macho_header_t* header);
+macho_header_t_64* macho_header_create_64();
+macho_header_t_64* macho_header_load_64(macho_t_64* macho);
+void macho_header_debug_64(macho_t_64* macho);
+void macho_header_free_64(macho_header_t_64* header);
 
 /*
  * Mach-O Commands Functions
  */
-macho_command_t** macho_commands_create(uint32_t count);
-macho_command_t** macho_commands_load(macho_t* macho);
-void macho_commands_debug(macho_t* macho);
-void macho_commands_free(macho_command_t** commands);
+macho_command_t_64** macho_commands_create_64(uint64_t count);
+macho_command_t_64** macho_commands_load_64(macho_t_64* macho);
+void macho_commands_debug_64(macho_t_64* macho);
+void macho_commands_free_64(macho_command_t_64** commands);
 
 /*
  * Mach-O Segments Functions
  */
-macho_segment_t** macho_segments_create(uint32_t count);
-macho_segment_t** macho_segments_load(macho_t* macho);
-void macho_segments_debug(macho_t* macho);
-void macho_segments_free(macho_segment_t** segments);
+macho_segment_t_64** macho_segments_create_64(uint64_t count);
+macho_segment_t_64** macho_segments_load_64(macho_t_64* macho);
+void macho_segments_debug_64(macho_t_64* macho);
+void macho_segments_free_64(macho_segment_t_64** segments);
 
 /*
  * Mach-O Symtab Functions
  */
-macho_symtab_t** macho_symtabs_create(uint32_t count);
-macho_symtab_t** macho_symtabs_load(macho_t* macho);
-void macho_symtabs_debug(macho_t* macho);
-void macho_symtabs_free(macho_symtab_t** symtabs);
+macho_symtab_t_64** macho_symtabs_create_64(uint64_t count);
+macho_symtab_t_64** macho_symtabs_load_64(macho_t_64* macho);
+void macho_symtabs_debug_64(macho_t_64* macho);
+void macho_symtabs_free_64(macho_symtab_t_64** symtabs);
 
 /*
  * Mach-O Sections Functions
  */
-macho_section_t** macho_sections_create(uint32_t count);
-macho_section_t** macho_sections_load(macho_t* macho, macho_segment_t* segment);
-void macho_sections_debug(macho_section_t** sections);
-void macho_sections_free(macho_section_t** sections);
+macho_section_t** macho_sections_create_64(uint64_t count);
+macho_section_t** macho_sections_load_64(macho_t_64* macho, macho_segment_t_64* segment);
+void macho_sections_debug_64(macho_section_t** sections);
+void macho_sections_free_64(macho_section_t** sections);
 
 #endif /* MACHO_H_ */

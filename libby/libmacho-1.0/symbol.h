@@ -21,7 +21,7 @@
 #define MACHO_SYMBOL_H_
 
 typedef struct macho_header_t {
-	uint32_t magic;
+	uint64_t magic;
 } macho_symbol_info_t;
 
 typedef struct macho_symbol_t {
@@ -32,7 +32,7 @@ typedef struct macho_symbol_t {
  * Mach-O Segment Functions
  */
 macho_symbol_t* macho_symbol_create();
-macho_symbol_t* macho_symbol_load(unsigned char* data, uint32_t offset);
+macho_symbol_t* macho_symbol_load(unsigned char* data, uint64_t offset);
 void macho_symbol_debug(macho_symbol_t* command);
 void macho_symbol_free(macho_symbol_t* command);
 
@@ -40,7 +40,7 @@ void macho_symbol_free(macho_symbol_t* command);
  * Mach-O Segment Info Functions
  */
 macho_symbol_info_t* macho_symbol_info_create();
-macho_symbol_info_t* macho_symbol_info_load(unsigned char* data, uint32_t offset);
+macho_symbol_info_t* macho_symbol_info_load(unsigned char* data, uint64_t offset);
 void macho_symbol_info_debug(macho_symbol_info_t* info);
 void macho_symbol_info_free(macho_symbol_info_t* info);
 

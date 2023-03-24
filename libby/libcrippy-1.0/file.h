@@ -2,6 +2,7 @@
   * libcrippy-1.0 - file.h
   * Copyright (C) 2013 Crippy-Dev Team
   * Copyright (C) 2010-2013 Joshua Hill
+  * 
   *
   * This program is free software: you can redistribute it and/or modify
   * it under the terms of the GNU General Public License as published by

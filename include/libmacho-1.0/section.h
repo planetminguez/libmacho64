@@ -2,7 +2,8 @@
  * libmacho-1.0 - section.h
  * Copyright (C) 2013 Crippy-Dev Team
  * Copyright (C) 2010-2013 Joshua Hill
- *
+ * Copyright (C) 2010-2023 Joshua Minguez
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +21,7 @@
 #ifndef MACHO_SECTION_H_
 #define MACHO_SECTION_H_
 
-#include <libcrippy-1.0/libcrippy.h>//
+#include <libcrippy-1.0/libcrippy.h>
 
 typedef struct macho_section_info_t_64 {
 	char		sectname[16];	/* name of this section */
@@ -41,21 +42,20 @@ typedef struct macho_section_t_64 {
 	macho_section_info_t_64* info;
 } macho_section_t_64;
 
-
 /*
  * Mach-O Segment Functions
  */
-macho_section_t_64* macho_section_create();
-macho_section_t_64* macho_section_load(unsigned char* data, uint64_t offset);
-void macho_section_debug(macho_section_t_64* section);
-void macho_section_free(macho_section_t_64* section);
+macho_section_t_64* macho_section_create_64();
+macho_section_t_64* macho_section_load_64(unsigned char* data, uint64_t offset);
+void macho_section_debug_64(macho_section_t_64* section);
+void macho_section_free_64(macho_section_t_64* section);
 
 /*
  * Mach-O Segment Info Functions
  */
-macho_section_info_t_64* macho_section_info_create();
-macho_section_info_t_64* macho_section_info_load(unsigned char* data, uint64_t offset);
-void macho_section_info_debug(macho_section_info_t_64* info);
-void macho_section_info_free(macho_section_info_t_64* info);
+macho_section_info_t_64* macho_section_info_create_64();
+macho_section_info_t_64* macho_section_info_load_64(unsigned char* data, uint64_t offset);
+void macho_section_info_debug_64(macho_section_info_t_64* info);
+void macho_section_info_free_64(macho_section_info_t_64* info);
 
 #endif /* MACHO_SECTION_H_ */
