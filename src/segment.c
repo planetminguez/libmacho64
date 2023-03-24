@@ -2,7 +2,6 @@
  * libmacho-1.0 - segment.c
  * Copyright (C) 2013 Crippy-Dev Team
  * Copyright (C) 2010-2013 Joshua Hill
- * Copyright (C) 2010-2023 Joshua Minguez
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,19 +30,19 @@
 /*
  * Mach-O Segment Functions
  */
-macho_segment_t_64* macho_segment_create_64() {
-	macho_segment_t_64* segment = (macho_segment_t_64*) malloc(sizeof(macho_segment_t_64));
+macho_segment_t* macho_segment_create() {
+	macho_segment_t* segment = (macho_segment_t*) malloc(sizeof(macho_segment_t));
 	if(segment) {
-		memset(segment, '\0', sizeof(macho_segment_t_64));
+		memset(segment, '\0', sizeof(macho_segment_t));
 	}
 	return segment;
 }
 
-macho_segment_t_64* macho_segment_load_64(unsigned char* data, uint64_t offset) {
+macho_segment_t* macho_segment_load(unsigned char* data, uint64_t offset) {
 	unsigned char* address = NULL;
-	macho_segment_t_64* segment = macho_segment_create_64();
+	macho_segment_t* segment = macho_segment_create();
 	if (segment) {
-		segment->command = macho_segment_cmd_load_64(data, offset);
+		segment->command = macho_segment_cmd_load(data, offset);
 		if (!segment->command) {
 			macho_segment_free(segment);
 			return NULL;
@@ -58,10 +57,10 @@ macho_segment_t_64* macho_segment_load_64(unsigned char* data, uint64_t offset) 
 	return segment;
 }
 
-macho_section_t_64* macho_segment_get_section_64(macho_segment_t_64* segment, const char* section) {
+macho_section_t* macho_segment_get_section(macho_segment_t* segment, const char* section) {
 	int i = 0;
 	for(i = 0; i < segment->section_count; i++) {
-		macho_section_t_64* sect = segment->sections[i];
+		macho_section_t* sect = segment->sections[i];
 		if(strcmp(sect->name, section) == 0) {
 			return sect;
 		}
@@ -69,7 +68,7 @@ macho_section_t_64* macho_segment_get_section_64(macho_segment_t_64* segment, co
 	return NULL;
 }
 
-void macho_segment_debug_64(macho_segment_t_64* segment) {
+void macho_segment_debug(macho_segment_t* segment) {
 	if(segment) {
 		debug("\tSegment:\n");
 		debug("\t\t   name: %s\n", segment->name);
@@ -77,15 +76,15 @@ void macho_segment_debug_64(macho_segment_t_64* segment) {
 		debug("\t\t offset: 0x%x\n", segment->offset);
 		debug("\t\taddress: 0x%08x\n", segment->address);
 		if(segment->command) {
-			macho_segment_cmd_debug_64(segment->command);
+			macho_segment_cmd_debug(segment->command);
 		}
 	}
 }
 
-void macho_segment_free_64(macho_segment_t_64* segment) {
+void macho_segment_free(macho_segment_t* segment) {
 	if (segment) {
 		if (segment->command) {
-			macho_segment_cmd_free_64(segment->command);
+			macho_segment_cmd_free(segment->command);
 		}
 		if (segment->name) {
 			free(segment->name);
@@ -97,24 +96,24 @@ void macho_segment_free_64(macho_segment_t_64* segment) {
 /*
  * Mach-O Segment Info Functions
  */
-macho_segment_cmd_t_64* macho_segment_cmd_create_64() {
-	macho_segment_cmd_t_64* info = malloc(sizeof(macho_segment_cmd_t_64));
+macho_segment_cmd_t* macho_segment_cmd_create() {
+	macho_segment_cmd_t* info = malloc(sizeof(macho_segment_cmd_t));
 	if (info) {
-		memset(info, '\0', sizeof(macho_segment_cmd_t_64));
+		memset(info, '\0', sizeof(macho_segment_cmd_t));
 	}
 	return info;
 }
 
-macho_segment_cmd_t_64* macho_segment_cmd_load_64(unsigned char* data, uint64_t offset) {
-	macho_segment_cmd_t_64* cmd = macho_segment_cmd_create_64();
+macho_segment_cmd_t* macho_segment_cmd_load(unsigned char* data, uint64_t offset) {
+	macho_segment_cmd_t* cmd = macho_segment_cmd_create();
 	if (cmd) {
-		memcpy(cmd, data+offset, sizeof(macho_segment_cmd_t_64));
+		memcpy(cmd, data+offset, sizeof(macho_segment_cmd_t));
 		//macho_segment_cmd_debug(cmd);
 	}
 	return cmd;
 }
 
-void macho_segment_cmd_debug_64(macho_segment_cmd_t_64* cmd) {
+void macho_segment_cmd_debug(macho_segment_cmd_t* cmd) {
 
 	if(cmd) {
 		debug("\tSegment Command:\n");
@@ -132,7 +131,7 @@ void macho_segment_cmd_debug_64(macho_segment_cmd_t_64* cmd) {
 	}
 
 }
-void macho_segment_cmd_free_64(macho_segment_cmd_t_64* cmd) {
+void macho_segment_cmd_free(macho_segment_cmd_t* cmd) {
 	if (cmd) {
 		free(cmd);
 	}

@@ -2,7 +2,6 @@
  * libmacho-1.0 - symbol.c
  * Copyright (C) 2013 Crippy-Dev Team
  * Copyright (C) 2010-2013 Joshua Hill
- * Copyright (C) 2010-2023 Joshua Minguez
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,41 +29,41 @@
 /*
  * Mach-O Segment Functions
  */
-macho_symbol_t_64* macho_symbol_create_64() {
-	macho_symbol_t_64* command = NULL;
+macho_symbol_t* macho_symbol_create() {
+	macho_symbol_t* command = NULL;
 	return command;
 }
 
-macho_symbol_t_64* macho_symbol_load_64(unsigned char* data, uint64_t offset) {
-	macho_symbol_t_64* command = macho_symbol_create_64();
+macho_symbol_t* macho_symbol_load(unsigned char* data, uint64_t offset) {
+	macho_symbol_t* command = macho_symbol_create();
 	return command;
 }
 
-void macho_symbol_debug_64(macho_symbol_t_64* command) {
+void macho_symbol_debug(macho_symbol_t* command) {
 
 }
 
-void macho_symbol_free_64(macho_symbol_t_64* command) {
+void macho_symbol_free(macho_symbol_t* command) {
 
 }
 
 /*
  * Mach-O Segment Info Functions
  */
-macho_symbol_info_t_64* macho_symbol_info_create_64() {
-	macho_symbol_info_t_64* info = NULL;
+macho_symbol_info_t* macho_symbol_info_create() {
+	macho_symbol_info_t* info = NULL;
 	return info;
 }
 
-macho_symbol_info_t_64* macho_symbol_info_load_64(unsigned char* data, uint64_t offset) {
-	macho_symbol_info_t_64* info = macho_symbol_info_create_64();
+macho_symbol_info_t* macho_symbol_info_load(unsigned char* data, uint64_t offset) {
+	macho_symbol_info_t* info = macho_symbol_info_create();
 	return info;
 }
 
-void macho_symbol_info_debug_64(macho_symbol_info_t_64* info) {
+void macho_symbol_info_debug(macho_symbol_info_t* info) {
 
 }
 
-void macho_symbol_info_free_64(macho_symbol_info_t_64* info) {
+void macho_symbol_info_free(macho_symbol_info_t* info) {
 
 }

@@ -2,7 +2,6 @@
  * libmacho-1.0 - command.c
  * Copyright (C) 2013 Crippy-Dev Team
  * Copyright (C) 2010-2013 Joshua Hill
- * Copyright (C) 2010-2023 Joshua Minguez
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,10 +32,10 @@
 /*
  * Mach-O Command Functions
  */
-macho_command_t_64* macho_command_create_64() {
-	macho_command_t_64* command = (macho_command_t_64*) malloc(sizeof(macho_command_t_64));
+macho_command_t* macho_command_create() {
+	macho_command_t* command = (macho_command_t*) malloc(sizeof(macho_command_t));
 	if (command) {
-		memset(command, '\0', sizeof(macho_command_t_64));
+		memset(command, '\0', sizeof(macho_command_t));
 	}
 	return command;
 }
@@ -65,15 +64,15 @@ macho_command_t_64* macho_command_create_64() {
 #define	MACHO_CMD_TWOLEVEL_HINTS   0x16 // two-level namespace lookup hints
 #define	MACHO_CMD_PREBIND_CKSUM    0x17 // prebind checksum
 */
-macho_command_t_64* macho_command_load_64(unsigned char* data, uint64_t offset) {
+macho_command_t* macho_command_load(unsigned char* data, uint64_t offset) {
 	uint64_t size = 0;
-	macho_command_t_64* command = macho_command_create_64();
+	macho_command_t* command = macho_command_create();
 	if(command == NULL) {
 		error("Unable to create command\n");
 		return NULL;
 	}
 
-	macho_command_info_t_64* info = macho_command_info_load_64(data, offset); //(macho_command_info_t_64*) &data[offset];
+	macho_command_info_t* info = macho_command_info_load(data, offset); //(macho_command_info_t*) &data[offset];
 	if (info) {
 		command->info = info;
 		command->cmd = info->cmd;
@@ -84,21 +83,21 @@ macho_command_t_64* macho_command_load_64(unsigned char* data, uint64_t offset) 
 
 	return command;
 }
-//
-void macho_command_debug_64(macho_command_t_64* command) {
+
+void macho_command_debug(macho_command_t* command) {
 	if (command) {
 		debug("\tCommand:\n");
 		if(command->info) {
-			macho_command_info_debug_64(command->info);
+			macho_command_info_debug(command->info);
 		}
 		debug("\t\n");
 	}
 }
 
-void macho_command_free_64(macho_command_t_64* command) {
+void macho_command_free(macho_command_t* command) {
 	if(command) {
 		if(command->info) {
-			macho_command_info_free_64(command->info);
+			macho_command_info_free(command->info);
 			command->info = NULL;
 		}
 		free(command);
@@ -108,26 +107,26 @@ void macho_command_free_64(macho_command_t_64* command) {
 /*
  * Mach-O Command Info Functions
  */
-macho_command_info_t_64* macho_command_info_create_64() {
-	macho_command_info_t_64* info = (macho_command_info_t_64*) malloc(sizeof(macho_command_info_t_64));
+macho_command_info_t* macho_command_info_create() {
+	macho_command_info_t* info = (macho_command_info_t*) malloc(sizeof(macho_command_info_t));
 	if (info) {
 		debug("Mach-O Command Info Created\n");
-		memset(info, '\0', sizeof(macho_command_info_t_64));
+		memset(info, '\0', sizeof(macho_command_info_t));
 	}
 	return info;
 }
 
-macho_command_info_t_64* macho_command_info_load_64(unsigned char* data, uint64_t offset) {
-	macho_command_info_t_64* info = (macho_command_info_t_64*)macho_command_info_create_64();
+macho_command_info_t* macho_command_info_load(unsigned char* data, uint64_t offset) {
+	macho_command_info_t* info = (macho_command_info_t*)macho_command_info_create();
 	if (info) {
 		debug("Mach-O Command Info Loaded\n");
-		memcpy(info, data+offset, sizeof(macho_command_info_t_64));
-		//macho_command_info_debug_64(info);
+		memcpy(info, data+offset, sizeof(macho_command_info_t));
+		//macho_command_info_debug(info);
 	}
 	return info;
 }
 
-void macho_command_info_debug_64(macho_command_info_t_64* info) {
+void macho_command_info_debug(macho_command_info_t* info) {
 	if (info) {
 		debug("\tInfo:\n");
 		debug("\t\t    cmd = %d\n", info->cmd);
@@ -136,7 +135,7 @@ void macho_command_info_debug_64(macho_command_info_t_64* info) {
 	}
 }
 
-void macho_command_info_free_64(macho_command_info_t_64* info) {
+void macho_command_info_free(macho_command_info_t* info) {
 	if (info) {
 		free(info);
 	}

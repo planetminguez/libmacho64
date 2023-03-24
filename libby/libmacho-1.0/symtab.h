@@ -22,46 +22,46 @@
 
 #include <libcrippy-1.0/libcrippy.h>
 
-typedef struct macho_symtab_cmd_t_64 {
-	uint64_t cmd;		/* LC_SYMTAB */
-	uint64_t cmdsize;	/* sizeof(struct macho_symtab_cmd_t_64) */
-	uint64_t symoff;	/* symbol table offset */
-	uint64_t nsyms;		/* number of symbol table entries */
-	uint64_t stroff;	/* string table offset */
-	uint64_t strsize;	/* string table size in bytes */
-} macho_symtab_cmd_t_64;
+typedef struct macho_symtab_cmd_t {
+	uint32_t cmd;		/* LC_SYMTAB */
+	uint32_t cmdsize;	/* sizeof(struct macho_symtab_cmd_t) */
+	uint32_t symoff;	/* symbol table offset */
+	uint32_t nsyms;		/* number of symbol table entries */
+	uint32_t stroff;	/* string table offset */
+	uint32_t strsize;	/* string table size in bytes */
+} macho_symtab_cmd_t;
 
-typedef struct nlist_64 {
+typedef struct nlist {
 	union {
 		char *n_name; /* resolved symbol name */
-		int64_t n_strx; /* index into the string table */
+		int32_t n_strx; /* index into the string table */
 	} n_un;
-	uint16_t n_type; /* type flag, see below */
-	uint16_t n_sect; /* section number or NO_SECT */
-	int32_t n_desc; /* see <mach-o/stab.h> */
-	uint64_t n_value; /* value of this symbol (or stab offset) */
-} nlist_64;
+	uint8_t n_type; /* type flag, see below */
+	uint8_t n_sect; /* section number or NO_SECT */
+	int16_t n_desc; /* see <mach-o/stab.h> */
+	uint32_t n_value; /* value of this symbol (or stab offset) */
+} nlist;
 
-typedef struct macho_symtab_t_64 {
-	uint64_t nsyms;
-	struct nlist_64* symbols;
-	macho_symtab_cmd_t_64* cmd;
-} macho_symtab_t_64;
+typedef struct macho_symtab_t {
+	uint32_t nsyms;
+	struct nlist* symbols;
+	macho_symtab_cmd_t* cmd;
+} macho_symtab_t;
 
 /*
  * Mach-O Symtab Functions
  */
-macho_symtab_t_64* macho_symtab_create_64();
-macho_symtab_t_64* macho_symtab_load_64(unsigned char* data, unsigned int offset);
-void macho_symtab_debug_64(macho_symtab_t_64* symtab);
-void macho_symtab_free_64(macho_symtab_t_64* symtab);
+macho_symtab_t* macho_symtab_create();
+macho_symtab_t* macho_symtab_load(unsigned char* data, unsigned int offset);
+void macho_symtab_debug(macho_symtab_t* symtab);
+void macho_symtab_free(macho_symtab_t* symtab);
 
 /*
  * Mach-O Symtab Info Functions
  */
-macho_symtab_cmd_t_64* macho_symtab_cmd_create_64();
-macho_symtab_cmd_t_64* macho_symtab_cmd_load_64(unsigned char* data);
-void macho_symtab_cmd_debug_64(macho_symtab_cmd_t_64* cmd);
-void macho_symtab_cmd_free_64(macho_symtab_cmd_t_64* cmd);
+macho_symtab_cmd_t* macho_symtab_cmd_create();
+macho_symtab_cmd_t* macho_symtab_cmd_load(unsigned char* data);
+void macho_symtab_cmd_debug(macho_symtab_cmd_t* cmd);
+void macho_symtab_cmd_free(macho_symtab_cmd_t* cmd);
 
 #endif /* MACHO_SYMTAB_H_ */

@@ -2,7 +2,6 @@
  * libmacho-1.0 - section.c
  * Copyright (C) 2013 Crippy-Dev Team
  * Copyright (C) 2010-2013 Joshua Hill
- * Copyright (C) 2010-2023 Joshua Minguez
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,22 +30,22 @@
 /*
  * Mach-O Segment Functions
  */
-macho_section_t_64* macho_section_create_64() {
-	macho_section_t_64* section = (macho_section_t_64*) malloc(sizeof(macho_section_t_64));
+macho_section_t* macho_section_create() {
+	macho_section_t* section = (macho_section_t*) malloc(sizeof(macho_section_t));
 	if(section) {
-		memset(section, '\0', sizeof(macho_section_t_64));
+		memset(section, '\0', sizeof(macho_section_t));
 	}
 	return section;
 }
 
-macho_section_t_64* macho_section_load_64(unsigned char* data, uint32_t offset) {
-	macho_section_t_64* section = NULL;
+macho_section_t* macho_section_load(unsigned char* data, uint32_t offset) {
+	macho_section_t* section = NULL;
 	if(data) {
 		debug("Creating Mach-O Section\n");
-		section = macho_section_create_64();
+		section = macho_section_create();
 		if(section) {
 			debug("Loading Mach-O Section\n");
-			section->info = macho_section_info_load_64(data, offset);
+			section->info = macho_section_info_load(data, offset);
 			if(section->info) {
 				section->name = strdup(section->info->sectname);
 				debug("Section %s Loaded\n", section->name);
@@ -56,38 +55,38 @@ macho_section_t_64* macho_section_load_64(unsigned char* data, uint32_t offset) 
 	return section;
 }
 
-void macho_section_debug_64(macho_section_t_64* section) {
+void macho_section_debug(macho_section_t* section) {
 	if(section && section->info) {
-		macho_section_info_debug_64(section->info);
+		macho_section_info_debug(section->info);
 	}
 
 }
 
-void macho_section_free_64(macho_section_t_64* section) {
+void macho_section_free(macho_section_t* section) {
 
 }
 
 /*
  * Mach-O Segment Info Functions
  */
-macho_section_info_t_64* macho_section_info_create() {
-	macho_section_info_t_64* info = malloc(sizeof(macho_section_info_t_64));
+macho_section_info_t* macho_section_info_create() {
+	macho_section_info_t* info = malloc(sizeof(macho_section_info_t));
 	if(info) {
-		memset(info, '\0', sizeof(macho_section_info_t_64));
+		memset(info, '\0', sizeof(macho_section_info_t));
 	}
 	return info;
 }
 
-macho_section_info_t_64* macho_section_info_load(unsigned char* data, uint32_t offset) {
-	macho_section_info_t_64* info = macho_section_info_create();
+macho_section_info_t* macho_section_info_load(unsigned char* data, uint32_t offset) {
+	macho_section_info_t* info = macho_section_info_create();
 	if(info) {
-		memcpy(info, &data[offset], sizeof(macho_section_info_t_64));
+		memcpy(info, &data[offset], sizeof(macho_section_info_t));
 		//macho_section_info_debug(info);
 	}
 	return info;
 }
 
-void macho_section_info_debug_64(macho_section_info_t_64* info) {
+void macho_section_info_debug(macho_section_info_t* info) {
 	debug("\t\tSection:\n");
 	debug("\t\t\tSectName: %s\n", info->sectname);
   	//char		sectname[16];	/* name of this section */
@@ -109,6 +108,6 @@ void macho_section_info_debug_64(macho_section_info_t_64* info) {
 	//uint32_t	flags;		/* flags (section type and attributes)*/
 }
 
-void macho_section_info_free_64(macho_section_info_t_64* info) {
+void macho_section_info_free(macho_section_info_t* info) {
 
 }

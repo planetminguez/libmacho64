@@ -45,37 +45,36 @@
 #define	MACHO_CMD_SUB_LIBRARY      0x15 // sub library
 #define	MACHO_CMD_TWOLEVEL_HINTS   0x16 // two-level namespace lookup hints
 #define	MACHO_CMD_PREBIND_CKSUM    0x17 // prebind checksum
-//
 
-typedef struct macho_command_info_t_64 {
-	uint64_t cmd;
-	uint64_t cmdsize;
-} macho_command_info_t_64;
 
-typedef struct macho_command_t_64 {
-	uint64_t cmd;
-	uint64_t size;
-	uint64_t index;
-	uint64_t offset;
+typedef struct macho_command_info_t {
+	uint32_t cmd;
+	uint32_t cmdsize;
+} macho_command_info_t;
+
+typedef struct macho_command_t {
+	uint32_t cmd;
+	uint32_t size;
+	uint32_t index;
+	uint32_t offset;
 	unsigned char* data;
-	macho_command_info_t_64* info;
-} macho_command_t_64;
-
+	macho_command_info_t* info;
+} macho_command_t;
 
 /*
  * Mach-O Command Functions
 */
-macho_command_t_64* macho_command_create_64();
-macho_command_t_64* macho_command_load_64(unsigned char* data, uint64_t offset);
-void macho_command_debug(macho_command_t_64* command);
-void macho_command_free(macho_command_t_64* command);
+macho_command_t* macho_command_create();
+macho_command_t* macho_command_load(unsigned char* data, uint32_t offset);
+void macho_command_debug(macho_command_t* command);
+void macho_command_free(macho_command_t* command);
 
 /*
  * Mach-O Command Info Functions
  */
-macho_command_info_t_64* macho_command_info_create_64();
-macho_command_info_t_64* macho_command_info_load_64(unsigned char* data, uint64_t offset);
-void macho_command_info_debug_64(macho_command_info_t_64* info);
-void macho_command_info_free_64(macho_command_info_t_64* info);
+macho_command_info_t* macho_command_info_create();
+macho_command_info_t* macho_command_info_load(unsigned char* data, uint32_t offset);
+void macho_command_info_debug(macho_command_info_t* info);
+void macho_command_info_free(macho_command_info_t* info);
 
 #endif /* MACHO_COMMAND_H_ */
