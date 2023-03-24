@@ -31,22 +31,22 @@
 /*
  * Mach-O Segment Functions
  */
-macho_section_t* macho_section_create() {
-	macho_section_t* section = (macho_section_t*) malloc(sizeof(macho_section_t));
+macho_section_t_64* macho_section_create_64() {
+	macho_section_t_64* section = (macho_section_t_64*) malloc(sizeof(macho_section_t_64));
 	if(section) {
-		memset(section, '\0', sizeof(macho_section_t));
+		memset(section, '\0', sizeof(macho_section_t_64));
 	}
 	return section;
 }
 
-macho_section_t* macho_section_load(unsigned char* data, uint32_t offset) {
-	macho_section_t* section = NULL;
+macho_section_t_64* macho_section_load_64(unsigned char* data, uint32_t offset) {
+	macho_section_t_64* section = NULL;
 	if(data) {
 		debug("Creating Mach-O Section\n");
-		section = macho_section_create();
+		section = macho_section_create_64();
 		if(section) {
 			debug("Loading Mach-O Section\n");
-			section->info = macho_section_info_load(data, offset);
+			section->info = macho_section_info_load_64(data, offset);
 			if(section->info) {
 				section->name = strdup(section->info->sectname);
 				debug("Section %s Loaded\n", section->name);
@@ -56,38 +56,38 @@ macho_section_t* macho_section_load(unsigned char* data, uint32_t offset) {
 	return section;
 }
 
-void macho_section_debug(macho_section_t* section) {
+void macho_section_debug_64(macho_section_t_64* section) {
 	if(section && section->info) {
-		macho_section_info_debug(section->info);
+		macho_section_info_debug_64(section->info);
 	}
 
 }
 
-void macho_section_free(macho_section_t* section) {
+void macho_section_free_64(macho_section_t_64* section) {
 
 }
 
 /*
  * Mach-O Segment Info Functions
  */
-macho_section_info_t* macho_section_info_create() {
-	macho_section_info_t* info = malloc(sizeof(macho_section_info_t));
+macho_section_info_t_64* macho_section_info_create() {
+	macho_section_info_t_64* info = malloc(sizeof(macho_section_info_t_64));
 	if(info) {
-		memset(info, '\0', sizeof(macho_section_info_t));
+		memset(info, '\0', sizeof(macho_section_info_t_64));
 	}
 	return info;
 }
 
-macho_section_info_t* macho_section_info_load(unsigned char* data, uint32_t offset) {
-	macho_section_info_t* info = macho_section_info_create();
+macho_section_info_t_64* macho_section_info_load(unsigned char* data, uint32_t offset) {
+	macho_section_info_t_64* info = macho_section_info_create();
 	if(info) {
-		memcpy(info, &data[offset], sizeof(macho_section_info_t));
+		memcpy(info, &data[offset], sizeof(macho_section_info_t_64));
 		//macho_section_info_debug(info);
 	}
 	return info;
 }
 
-void macho_section_info_debug(macho_section_info_t* info) {
+void macho_section_info_debug_64(macho_section_info_t_64* info) {
 	debug("\t\tSection:\n");
 	debug("\t\t\tSectName: %s\n", info->sectname);
   	//char		sectname[16];	/* name of this section */
@@ -109,6 +109,6 @@ void macho_section_info_debug(macho_section_info_t* info) {
 	//uint32_t	flags;		/* flags (section type and attributes)*/
 }
 
-void macho_section_info_free(macho_section_info_t* info) {
+void macho_section_info_free_64(macho_section_info_t_64* info) {
 
 }

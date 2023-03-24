@@ -30,41 +30,41 @@
 /*
  * Mach-O Segment Functions
  */
-macho_symbol_t* macho_symbol_create() {
-	macho_symbol_t* command = NULL;
+macho_symbol_t_64* macho_symbol_create_64() {
+	macho_symbol_t_64* command = NULL;
 	return command;
 }
 
-macho_symbol_t* macho_symbol_load(unsigned char* data, uint64_t offset) {
-	macho_symbol_t* command = macho_symbol_create();
+macho_symbol_t_64* macho_symbol_load_64(unsigned char* data, uint64_t offset) {
+	macho_symbol_t_64* command = macho_symbol_create_64();
 	return command;
 }
 
-void macho_symbol_debug(macho_symbol_t* command) {
+void macho_symbol_debug_64(macho_symbol_t_64* command) {
 
 }
 
-void macho_symbol_free(macho_symbol_t* command) {
+void macho_symbol_free_64(macho_symbol_t_64* command) {
 
 }
 
 /*
  * Mach-O Segment Info Functions
  */
-macho_symbol_info_t* macho_symbol_info_create() {
-	macho_symbol_info_t* info = NULL;
+macho_symbol_info_t_64* macho_symbol_info_create_64() {
+	macho_symbol_info_t_64* info = NULL;
 	return info;
 }
 
-macho_symbol_info_t* macho_symbol_info_load(unsigned char* data, uint64_t offset) {
-	macho_symbol_info_t* info = macho_symbol_info_create();
+macho_symbol_info_t_64* macho_symbol_info_load_64(unsigned char* data, uint64_t offset) {
+	macho_symbol_info_t_64* info = macho_symbol_info_create_64();
 	return info;
 }
 
-void macho_symbol_info_debug(macho_symbol_info_t* info) {
+void macho_symbol_info_debug_64(macho_symbol_info_t_64* info) {
 
 }
 
-void macho_symbol_info_free(macho_symbol_info_t* info) {
+void macho_symbol_info_free_64(macho_symbol_info_t_64* info) {
 
 }

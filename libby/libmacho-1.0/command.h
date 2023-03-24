@@ -75,7 +75,7 @@ void macho_command_free(macho_command_t_64* command);
  */
 macho_command_info_t_64* macho_command_info_create_64();
 macho_command_info_t_64* macho_command_info_load_64(unsigned char* data, uint64_t offset);
-void macho_command_info_debug(macho_command_info_t_64* info);
-void macho_command_info_free(macho_command_info_t_64* info);
+void macho_command_info_debug_64(macho_command_info_t_64* info);
+void macho_command_info_free_64(macho_command_info_t_64* info);
 
 #endif /* MACHO_COMMAND_H_ */

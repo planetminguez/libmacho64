@@ -23,7 +23,7 @@
 #include <libmacho-1.0/section.h>
 #include <libcrippy-1.0/libcrippy.h>
 
-typedef struct macho_segment_cmd_t {
+typedef struct macho_segment_cmd_t_64 {
 	uint64_t cmd;
 	uint64_t cmdsize;
 	char segname[16];
@@ -35,34 +35,34 @@ typedef struct macho_segment_cmd_t {
 	uint64_t initprot;
 	uint64_t nsects;
 	uint64_t flags;
-} macho_segment_cmd_t;
+} macho_segment_cmd_t_64;
 
-typedef struct macho_segment_t {
+typedef struct macho_segment_t_64 {
 	char* name;
 	uint64_t size;
 	uint64_t offset;
 	uint64_t address;
 	unsigned char* data;
 	uint64_t section_count;
-	macho_section_t** sections;
-	macho_segment_cmd_t* command;
-} macho_segment_t;
+	macho_section_t_64** sections;
+	macho_segment_cmd_t_64* command;
+} macho_segment_t_64;
 
 /*
  * Mach-O Segment Functions
  */
-macho_segment_t* macho_segment_create();
-macho_segment_t* macho_segment_load(unsigned char* data, uint64_t offset);
-macho_section_t* macho_segment_get_section(macho_segment_t* segment, const char* section);
-void macho_segment_debug(macho_segment_t* segment);
-void macho_segment_free(macho_segment_t* segment);
+macho_segment_t_64* macho_segment_create_64();
+macho_segment_t_64* macho_segment_load_64(unsigned char* data, uint64_t offset);
+macho_section_t_64* macho_segment_get_section_64(macho_segment_t_64* segment, const char* section);
+void macho_segment_debug_64(macho_segment_t_64* segment);
+void macho_segment_free_64(macho_segment_t_64* segment);
 
 /*
  * Mach-O Segment Info Functions
  */
-macho_segment_cmd_t* macho_segment_cmd_create();
-macho_segment_cmd_t* macho_segment_cmd_load(unsigned char* data, uint64_t offset);
-void macho_segment_cmd_debug(macho_segment_cmd_t* cmd);
-void macho_segment_cmd_free(macho_segment_cmd_t* cmd);
+macho_segment_cmd_t_64* macho_segment_cmd_create_64();
+macho_segment_cmd_t_64* macho_segment_cmd_load_64(unsigned char* data, uint64_t offset);
+void macho_segment_cmd_debug_64(macho_segment_cmd_t_64* cmd);
+void macho_segment_cmd_free_64(macho_segment_cmd_t_64* cmd);
 
 #endif /* MACHO_SEGMENT_H_ */

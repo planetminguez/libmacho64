@@ -66,7 +66,7 @@ macho_t_64* macho_load_64(unsigned char* data, uint64_t size) {
 
 		debug("Loading Mach-O commands\n");
 		macho->command_count = macho->header->ncmds;
-		macho->commands = macho_commands_load(macho);
+		macho->commands = macho_commands_load_64(macho);
 		if (macho->commands == NULL) {
 			error("Unable to parse Mach-O load commands\n");
 			macho_free(macho);
@@ -74,15 +74,15 @@ macho_t_64* macho_load_64(unsigned char* data, uint64_t size) {
 		}
 
 		debug("Loading Mach-O segments\n");
-		macho->segments = macho_segments_load(macho);
+		macho->segments = macho_segments_load_64(macho);
 		if (macho->segments == NULL) {
 			error("Unable to parse Mach-O segment commands\n");
-			macho_free(macho);
+			macho_free_64(macho);
 			return NULL;
 		}
 
 		debug("Loading Mach-O symtabs\n");
-		macho->symtabs = macho_symtabs_load(macho);
+		macho->symtabs = macho_symtabs_load_64(macho);
 		if (macho->symtabs == NULL) {
 			error("Unable to parse Mach-O symtab commands\n");
 			macho_free(macho);
@@ -96,7 +96,7 @@ macho_t_64* macho_load_64(unsigned char* data, uint64_t size) {
 macho_t_64* macho_open_64(const char* path) {
 	int err = 0;
 	uint64_t size = 0;
-	macho_t_64_64* macho = NULL;
+	macho_t_64* macho = NULL;
 	unsigned char* data = NULL;
 
 	if (path) {
@@ -121,8 +121,8 @@ macho_t_64* macho_open_64(const char* path) {
 uint64_t macho_lookup_64(macho_t_64_64* macho, const char* sym) {
 	int i = 0;
 	int j = 0;
-	nlist_64_64* nl = NULL;
-	macho_symtab_t_64_64* symtab = NULL;
+	nlist_64* nl = NULL;
+	macho_symtab_t_64* symtab = NULL;
 	for (i = 0; i < macho->symtab_count; i++) {
 		symtab = macho->symtabs[i];
 		for (j = 0; j < symtab->nsyms; j++) {
@@ -453,7 +453,7 @@ macho_segment_t_64** macho_segments_load_64(macho_t_64* macho) {
 				macho_section_t_64* section = NULL;
 				macho_section_t_64** sections = NULL;
 				segment->sections = macho_sections_load_64(macho, segment);
-				offset = command->offset + sizeof(macho_segment_cmd_t);
+				offset = command->offset + sizeof(macho_segment_cmd_t_64);
 			}
 		}
 	}
@@ -580,7 +580,7 @@ void macho_symtabs_free_64(macho_symtab_t_64** symtabs) {
 macho_section_t_64** macho_sections_create_64(uint64_t count) {
 	// TODO: Check for integer overflow here
 	unsigned int size = (count + 1) * sizeof(macho_section_t_64*);
-	macho_section_t** sections = (macho_section_t_64**) malloc(size);
+	macho_section_t_64** sections = (macho_section_t_64**) malloc(size);
 	if (sections) {
 		memset(sections, '\0', size);
 	}
@@ -595,13 +595,13 @@ macho_section_t_64** macho_sections_load(macho_t_64* macho, macho_segment_t_64* 
 
 	if (macho && segment) {
 		debug("Creating section array for segment\n");
-		sections = macho_sections_create(segment->section_count);
+		sections = macho_sections_create_64(segment->section_count);
 		if (sections == NULL) {
 			error("Unable to create section array for segment\n");
 			return NULL;
 		}
 
-		offset = segment->offset + sizeof(macho_segment_cmd_t);
+		offset = segment->offset + sizeof(macho_segment_cmd_t_64);
 		for (i = 0; i < segment->section_count; i++) {
 			debug("Loading section %d\n", i);
 			sections[i] = macho_section_load(macho->data, offset);
@@ -611,11 +611,11 @@ macho_section_t_64** macho_sections_load(macho_t_64* macho, macho_segment_t_64* 
 	return sections;
 }
 
-void macho_sections_debug(macho_section_t_64** sections) {
+void macho_sections_debug_64(macho_section_t_64** sections) {
 	debug("\tSections:\n");debug("\t\n");
 }
 
-void macho_sections_free(macho_section_t_64** sections) {
+void macho_sections_free_64(macho_section_t_64** sections) {
 	// TODO: Loop through and free each item
 	if (sections) {
 		free(sections);

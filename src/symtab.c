@@ -64,7 +64,7 @@ macho_symtab_t_64* macho_symtab_load_64(unsigned char* data, unsigned int offset
 	return symtab;
 }
 
-void macho_symtab_debug(macho_symtab_t_64* symtab) {
+void macho_symtab_debug_64(macho_symtab_t_64* symtab) {
 	int i = 0;
 	if(symtab) {
 		debug("\tSymtab:\n");
@@ -102,7 +102,7 @@ macho_symtab_cmd_t_64* macho_symtab_cmd_create_64() {
 }
 
 macho_symtab_cmd_t_64* macho_symtab_cmd_load_64(unsigned char* data) {
-	macho_symtab_cmd_t_64* cmd = macho_symtab_cmd_create();
+	macho_symtab_cmd_t_64* cmd = macho_symtab_cmd_create_64();
 	if (cmd) {
 		memcpy(cmd, data, sizeof(macho_symtab_cmd_t_64));
 		//macho_symtab_cmd_debug(cmd);
@@ -110,7 +110,7 @@ macho_symtab_cmd_t_64* macho_symtab_cmd_load_64(unsigned char* data) {
 	return cmd;
 }
 
-void macho_symtab_cmd_debug(macho_symtab_cmd_t_64* cmd) {
+void macho_symtab_cmd_debug_64(macho_symtab_cmd_t_64* cmd) {
 	debug("\tSymtab Command:\n");
 	debug("\t\t     cmd = 0x%x\n", cmd->cmd);
 	debug("\t\t cmdsize = 0x%x\n", cmd->cmdsize);
@@ -120,7 +120,7 @@ void macho_symtab_cmd_debug(macho_symtab_cmd_t_64* cmd) {
 	debug("\t\t strsize = 0x%x\n", cmd->strsize);
 }
 
-void macho_symtab_cmd_free(macho_symtab_cmd_t_64* cmd) {
+void macho_symtab_cmd_free_64(macho_symtab_cmd_t_64* cmd) {
 	if (cmd) {
 		free(cmd);
 	}

@@ -50,7 +50,7 @@ typedef struct macho_t_64 {
 	uint64_t segment_count;
 	uint64_t symtab_count;
 	macho_header_t_64* header;
-	macho_symtab_t_64_64** symtabs;
+	macho_symtab_t_64** symtabs;
 	macho_command_t_64** commands;
 	macho_segment_t_64** segments;
 } macho_t_64;
